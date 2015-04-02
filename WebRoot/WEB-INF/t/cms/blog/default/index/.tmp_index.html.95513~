@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${site.name}</title>
+<meta name="keywords" content="个人博客模板,博客模板" />
+<meta name="description" content="寻梦主题的个人博客模板，优雅、稳重、大气,低调。" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="/${res}/css/base.css" rel="stylesheet">
+<link href="/${res}/css/index.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+[#include "../include/header_index.html"/]
+<div class="banner">
+  <section class="box">
+    <ul class="texts">
+      <p>懂你说的，懂你没说的。</p>
+      <p>天外有天，人外有人。</p>
+      <p>加了锁的青春，不会再因谁而推开心门。</p>
+    </ul>
+    <div class="avatar"><a href="#"><span>杨青</span></a> </div>
+  </section>
+</div>
+<!---->
+<div class="template">
+  <div class="box">
+    <h3>
+      <p><span>个人博客</span>模板 Templates</p>
+    </h3>
+    <ul>
+      <li><a href="/"  target="_blank"><img src="../../r/blog/images/01.jpg"></a><span>仿新浪博客风格·梅——古典个人博客模板</span></li>
+      <li><a href="/" target="_blank"><img src="../../r/blog/images/02.jpg"></a><span>黑色质感时间轴html5个人博客模板</span></li>
+      <li><a href="/"  target="_blank"><img src="../../r/blog/images/03.jpg"></a><span>Green绿色小清新的夏天-个人博客模板</span></li>
+      <li><a href="/" target="_blank"><img src="../../r/blog/images/04.jpg"></a><span>女生清新个人博客网站模板</span></li>
+      <li><a href="/"  target="_blank"><img src="../../r/blog/images/02.jpg"></a><span>黑色质感时间轴html5个人博客模板</span></li>
+      <li><a href="/"  target="_blank"><img src="../../r/blog/images/03.jpg"></a><span>Green绿色小清新的夏天-个人博客模板</span></li>
+    </ul>
+  </div>
+</div>
+
+<article>
+  <h2 class="title_tj">
+    <p>文章<span>推荐</span></p>
+  </h2>
+  <div class="bloglist left">
+  	[@cms_content_list count='10' orderBy='4' titLen='18']
+    [#list tag_list as a]
+		<h3>[@text_cut s=a.title len=titLen /]</h3>
+	    <figure><img src="../../r/blog/images/001.png"></figure>
+	    <ul>
+	      <p>[@text_cut s=a.txt len=300 append="..."/]</p>
+	      <a title="/" href="${a.url}" target="_blank" class="readmore">阅读全文>></a>
+	    </ul>
+	    <p class="dateview"><span> ${a.releaseDate}</span><span>作者：${a.author!'佚名'}</span><span>个人博客：[<a href="${a.channel.url}">${a.channel.name}</a>]</span></p>
+    [/#list]
+    [/@cms_content_list]
+  </div>
+  
+  
+  <aside class="right">
+    <div class="weather">
+    	<iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=1"></iframe>
+	</div>
+    <div class="news">
+    <h3><p>最新<span>文章</span></p></h3>
+    <ul class="rank">
+	  [@cms_content_list count='6' orderBy='4' typeId='3' titLen='18' channelOption='1' channelId='1']
+        [#list tag_list as a]
+		<li>
+			<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+		</li>
+        [/#list]
+        [/@cms_content_list]
+    </ul>
+    <h3 class="ph">
+      <p>点击<span>排行</span></p>
+    </h3>
+    <ul class="paih">
+    	[@cms_content_list count='5' orderBy='9' typeId='3' titLen='18' channelOption='1' channelId='1']
+        [#list tag_list as a]
+		<li>
+			<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+		</li>
+        [/#list]
+        [/@cms_content_list]
+    </ul>
+    <h3 class="links">
+      <p>友情<span>链接</span></p>
+    </h3>
+    <ul class="website">
+      <li><a href="/">个人博客</a></li>
+      <li><a href="/">七十二颗星</a></li>
+      <li><a href="/">八兔工具网</a></li>
+    </ul> 
+    </div>  
+    <!-- Baidu Button BEGIN -->
+	<!---->
+    <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_tsina"></a><a class="bds_qzone"></a><a class="bds_tqq"></a><a class="bds_renren"></a><span class="bds_more"></span><a class="shareCount"></a></div>
+    <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script> 
+    <script type="text/javascript" id="bdshell_js"></script> 
+    <script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script> 
+    <!-- Baidu Button END -->   
+    <a href="/" class="weixin"> </a></aside>
+</article>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/silder.js"></script>
+</body>
+</html>

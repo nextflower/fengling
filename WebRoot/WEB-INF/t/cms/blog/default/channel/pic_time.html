@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${channel.title!channel.name} - ${site.name}</title>
+<meta name="keywords" content="${channel.keywords!}" />
+<meta name="description" content="${channel.description!}" />
+<link href="/${res}/css/base.css" rel="stylesheet">
+<link href="/${res}/css/mood.css" rel="stylesheet">
+
+<link rel="shortcut icon"  type="image/x-icon" href="/${res}/images/fengling.ico" />
+
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+
+[#include "../include/header.html"/]
+
+<div class="moodlist">
+  <h1 class="t_nav"><span>光阴荏苒，日月如梭 ，人生短暂，需要珍惜。</span><a href="${base}" class="n1">网站首页</a><a href="${channel.url}" class="n2">${channel.name}</a></h1>
+  <div class="bloglist">
+  	
+	[@cms_content_page count='10' orderBy='4' titLen='18' channelId='${channel.id}']
+    [#list tag_list as a]
+		<ul class="arrow_box">
+	     <div class="sy">
+	     	<!--
+	     <img src="/${res}/images/001.png">-->
+	      <p> ${a.txtNoCss!}</p>
+	      </div>
+	      <span class="dateview">${a.releaseDate?string('yyyy-MM-dd')}</span>
+	    </ul>
+    [/#list]
+	[#include "../include/page.html"/]
+    [/@cms_content_page]
+	
+  </div>
+  <!--
+  <div class="page"><a title="Total record"><b>41</b></a><b>1</b><a href="/news/s/index_2.html">2</a><a href="/news/s/index_2.html">&gt;</a><a href="/news/s/index_2.html">&gt;&gt;</a></div>
+  -->
+</div>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/silder.js"></script>
+</body>
+</html>

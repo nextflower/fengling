@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${channel.title!channel.name} - ${site.name}</title>
+<meta name="keywords" content="${channel.keywords!}" />
+<meta name="description" content="${channel.description!}" />
+<link href="/${res}/css/base.css" rel="stylesheet">
+<link href="/${res}/css/learn.css" rel="stylesheet">
+
+<link rel="shortcut icon"  type="image/x-icon" href="/${res}/images/fengling.ico" />
+
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+[#include "../include/header.html"/]
+
+<article class="blogs">
+<h1 class="t_nav"><span>${channel.description!} </span><a href="${base}" class="n1">网站首页</a><a href="${channel.url}" class="n2">${channel.name}</a></h1>
+<div class="newblog left">
+	[@cms_content_page count='10' orderBy='4' titLen='18' channelId='${channel.id}']
+    [#list tag_list as a]
+		<h2><a href="${a.url!}">[@text_cut s=a.title len=titLen /]</a></h2>
+	    <p class="dateview"><span> ${a.releaseDate}</span><span>作者：${a.author!'于辰'}</span><span>个人博客：[<a href="${a.channel.url}">${a.channel.name}</a>]</span></p>
+	    <figure>
+			[#if a.smallImg??]
+			<a href="${a.url!}"><img src="${a.smallImg!}"></a>
+			[#else]
+	    	<img src="/${res}/images/dk2.jpg">
+			[/#if]
+		</figure>
+	    <ul class="nlist">
+	      <p>[@text_cut s=a.txtNoCss len=200 append="..."/]</p>
+	      <a title="/" href="${a.url}" target="_blank" class="readmore">阅读全文>></a>
+	    </ul>
+		<div class="line"></div>
+    [/#list]
+	[#include "../include/page.html"/]
+    [/@cms_content_page]
+	
+    <div class="blank"></div>
+	<!--
+    <div class="ad"><img src="/${res}/images/ad.png"></div>
+	-->
+	<!--
+    <div class="page">
+    	<a title="Total record"><b>41</b></a>
+		<b>1</b>
+		<a href="/news/s/index_2.html">2</a>
+		<a href="/news/s/index_2.html">&gt;</a>
+		<a href="/news/s/index_2.html">&gt;&gt;</a>
+	</div>
+	-->
+</div>
+<aside class="right">
+	[#include "../include/baidushare.html"/]
+   <div class="rnav">
+      <h2>栏目导航</h2>
+      <ul>
+      	[@cms_channel_list parentId=channel.parent.id]
+		[#list tag_list as c]
+			<li><a href="${c.url}" target="_self">${c.name}</a></li>
+		[/#list]
+		[/@cms_channel_list]
+     </ul>      
+    </div>
+<div class="news">
+<h3>
+      <p>最新<span>文章</span></p>
+    </h3>
+    <ul class="rank">
+    	[@cms_simple_content_page count='6' orderBy='4' titLen='18' channelOption='1' channelId='${channel.id}']
+        [#list tag_list as a]
+		<li>
+			<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+		</li>
+        [/#list]
+        [/@cms_simple_content_page]
+    </ul>
+    <h3 class="ph">
+      <p>点击<span>排行</span></p>
+    </h3>
+    <ul class="paih">
+    	[@cms_simple_content_page count='5' orderBy='9' titLen='18' channelOption='1' channelId='${channel.id}']
+        [#list tag_list as a]
+		<li>
+			<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+		</li>
+        [/#list]
+        [/@cms_simple_content_page]
+    </ul>
+    </div>
+    <div class="visitors">
+      <h3><p>最近访客</p></h3>
+      <ul class="ds-recent-visitors" data-avatar-size="30"></ul>
+    </div>
+</aside>
+</article>
+
+[#include "../include/footer.html"/]
+
+<script src="/${res}/js/silder.js"></script>
+</body>
+</html>

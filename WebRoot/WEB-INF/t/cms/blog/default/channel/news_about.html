@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${channel.title!channel.name} - ${site.name}</title>
+<meta name="keywords" content="${channel.keywords!}" />
+<meta name="description" content="${channel.description!}" />
+<link href="/${res}/css/base.css" rel="stylesheet">
+<link href="/${res}/css/about.css" rel="stylesheet">
+
+<link rel="shortcut icon"  type="image/x-icon" href="/${res}/images/fengling.ico" />
+
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+<link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+[#include "../include/header.html"/]
+
+<article class="aboutcon_bak">
+<h1 class="t_nav"><span>简短的介绍。</span><a href="${base}" class="n1">网站首页</a><a href="${channel.url}" class="n2">${channel.name}</a></h1>
+<div class="about left">
+  <h2>Just about me</h2>
+    <ul> 
+	<p>面包会有的，牛奶也会有的。</p>
+    </ul>
+    <h2>About my blog</h2>
+    <p>域  名：www.fenglingdukou.com 创建于2015年03月16日 <a href="http://www.xinnet.com" class="blog_link" target="_blank" rel="nofollow">注册域名</a></p>
+    <p>服务器：阿里云服务器</p>
+    <p>备案号：京ICP备15002628号-3 <a href="http://www.miitbeian.gov.cn/" class="blog_link" target="_blank" rel="nofollow">备案查询</a></p>
+    <p>模板提供：DanceSmile  <a href="http://www.yangqq.com/download/" class="blog_link" target="_blank" rel="nofollow">模板下载地址</a></p>
+</div>
+<aside class="right">  
+    <div class="about_c">
+    <p>网名：<span>风陵渡口</span></p>
+    <p>职业：程序员</p>
+    <p>座右铭：不积跬步，无以至千里；不积小流，无以成江海。</p>
+    <p>喜欢的书：《缥缈录》、《小王子》</p>
+	<!--
+<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=d4d4a26952d46d564ee5bf7782743a70d5a8c405f4f9a33a60b0eec380743c64">
+<img src="http://pub.idqqimg.com/wpa/images/group.png" alt="个人博客网站" title="个人博客网站"></a>
+
+<a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=HHh9cn95b3F1cHVye1xtbTJ-c3E" >
+	<img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_22.png" alt="个人博客网站"></a>
+	-->
+</div>     
+</aside>
+</article>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/silder.js"></script>
+</body>
+</html>

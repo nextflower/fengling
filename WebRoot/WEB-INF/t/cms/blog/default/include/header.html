@@ -1,0 +1,16 @@
+<header>
+<div id="logo">
+    <a href="/"></a>
+</div>
+<nav class="topnav" id="topnav">
+    <a href="${base}"><span>首页</span><span class="en">Protal</span></a>
+	[@cms_channel_list]
+		[#list tag_list as c]
+			[#if c_index<7]
+			<a href="${c.url}"><span>${c.name}</span><span class="en">${c.path}</span></a>
+			[/#if]
+		[/#list]
+	[/@cms_channel_list]
+</nav>
+</nav>
+</header>
