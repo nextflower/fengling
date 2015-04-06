@@ -46,6 +46,7 @@
 	<bean id="weixinTokenCache" class="com.fengling.cms.service.WeixinTokenCacheImpl"/>
 	<bean id="acquisitionSvc" class="com.fengling.cms.service.AcquisitionSvcImpl"/>
 	<bean id="luceneContentSvc" class="com.fengling.cms.lucene.LuceneContentSvcImpl"/>
+	<bean id="solrContentSvc" class="com.fengling.cms.lucene.SolrContentSvcImpl"/>
 	<bean id="searchWordsCache" class="com.fengling.cms.service.SearchWordsCacheImpl"/>
 	<bean id="imageSvc" class="com.fengling.cms.service.ImageSvcImpl"/>
 	<bean id="staticPageSvc" class="com.fengling.cms.staticpage.StaticPageSvcImpl">
@@ -78,6 +79,7 @@
 	
 	<!--LISTENER-->
 	<bean id="contentLuceneListener" class="com.fengling.cms.lucene.ContentLuceneListener"/>
+	<bean id="contentSolrListener" class="com.fengling.cms.lucene.ContentSolrListener"/>
 	<bean id="contentStaticPageListener" class="com.fengling.cms.staticpage.ContentStaticPageListener"/>
 	
 	<!--MANAGER-->
@@ -99,6 +101,7 @@
 				<!--
 				<ref bean="contentLuceneListener"/>
 				-->
+				<ref bean="contentSolrListener"/>
 				<ref bean="contentStaticPageListener"/>
 			</list>
 		</property>

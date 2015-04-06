@@ -30,7 +30,6 @@ $(function() {
 
 <@p.radio colspan="2"  width="100" label="cmsConfig.viewOnlyChecked" name="viewOnlyChecked" value=cmsConfig.viewOnlyChecked list={"true":"global.true","false","global.false"} required="true" class="required"/>
 <@p.tr/>
-<@p.text colspan="2" width="200" style="width:300px" label="solr path" name="solrPath" value=cmsConfig.solrPath help="solr应用路径" class="required"/><@p.tr/>
 <@p.td colspan="2"><@p.hidden name="id" value=cmsConfig.id/><@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/></@p.td>
 </@p.form>
 </div>

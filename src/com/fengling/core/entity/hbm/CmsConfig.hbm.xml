@@ -19,6 +19,7 @@
 		<property name="downloadTime" column="download_time" type="integer" not-null="true" length="10"/>
 		<property name="emailValidate" column="EMAIL_VALIDATE" type="java.lang.Boolean" not-null="false"/>
 		<property name="viewOnlyChecked" column="view_only_checked" type="java.lang.Boolean" not-null="true"/>
+		<property name="solrPath" column="solr_path" type="java.lang.String" not-null="true"/>
 		
 		<component name="markConfig" class="MarkConfig">
 		<property name="on" column="mark_on" type="java.lang.Boolean" not-null="true"/>

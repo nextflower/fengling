@@ -111,6 +111,7 @@ public abstract class BaseCmsConfig  implements Serializable {
 	private java.lang.Integer downloadTime;
 	private java.lang.Boolean emailValidate;
 	private java.lang.Boolean viewOnlyChecked;
+	private java.lang.String solrPath;
 
 	// components
 	 com.fengling.core.entity.MarkConfig m_markConfig;
@@ -425,6 +426,14 @@ public abstract class BaseCmsConfig  implements Serializable {
 
 	public String toString () {
 		return super.toString();
+	}
+
+	public void setSolrPath(java.lang.String solrPath) {
+		this.solrPath = solrPath;
+	}
+
+	public java.lang.String getSolrPath() {
+		return solrPath;
 	}
 
 
