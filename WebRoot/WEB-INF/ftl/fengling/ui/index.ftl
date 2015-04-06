@@ -15,6 +15,7 @@
 <#include "form.ftl"/>
 <#include "td.ftl"/>
 <#include "tr.ftl"/>
+<#include "ueditor.ftl"/>
 
 <#include "self_define_widget.ftl"/>
 <#include "self_define_register_widget.ftl"/>
