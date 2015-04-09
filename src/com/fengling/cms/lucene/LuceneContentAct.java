@@ -42,10 +42,34 @@ public class LuceneContentAct {
 		model.addAttribute("channelList", channelList);
 		return "lucene/index";
 	}
-
+	
 	@RequiresPermissions("lucene:o_create")
 	@RequestMapping(value = "/lucene/o_create.do")
 	public void create(Integer siteId, Integer channelId, Date startDate,
+			Date endDate, Integer startId, Integer max,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		System.out.println("开始创建索引....");
+		solrContentSvc.createIndex(siteId, channelId);
+		System.out.println("索引创建完毕....");
+	}
+	
+	
+	/**
+	 * 系统自带重建逻辑
+	 * 
+	 * @param siteId
+	 * @param channelId
+	 * @param startDate
+	 * @param endDate
+	 * @param startId
+	 * @param max
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException
+	 */
+	public void createDemo(Integer siteId, Integer channelId, Date startDate,
 			Date endDate, Integer startId, Integer max,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) throws JSONException {
@@ -86,4 +110,7 @@ public class LuceneContentAct {
 
 	@Autowired
 	private ChannelMng channelMng;
+	
+	@Autowired
+	private SolrContentSvc solrContentSvc;
 }

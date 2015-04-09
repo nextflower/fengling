@@ -30,7 +30,9 @@
 	<bean id="cms_friendlink_ctg_list" class="com.fengling.cms.action.directive.CmsFriendlinkCtgListDirective"/>
 	<bean id="cms_friendlink_list" class="com.fengling.cms.action.directive.CmsFriendlinkListDirective"/>
 	<bean id="cms_lucene_list" class="com.fengling.cms.lucene.LuceneDirectiveList"/>
+	<bean id="cms_solr_list" class="com.fengling.cms.lucene.SolrDirectiveList"/>
 	<bean id="cms_lucene_page" class="com.fengling.cms.lucene.LuceneDirectivePage"/>
+	<bean id="cms_solr_page" class="com.fengling.cms.lucene.SolrDirectivePage"/>
 	<bean id="cms_advertising" class="com.fengling.cms.action.directive.CmsAdvertisingDirective"/>
 	<bean id="cms_vote_list" class="com.fengling.cms.action.directive.CmsVoteListDirective"/>
 	<bean id="cms_model" class="com.fengling.cms.action.directive.CmsModelDirective"/>
@@ -47,6 +49,7 @@
 	<bean id="acquisitionSvc" class="com.fengling.cms.service.AcquisitionSvcImpl"/>
 	<bean id="luceneContentSvc" class="com.fengling.cms.lucene.LuceneContentSvcImpl"/>
 	<bean id="solrContentSvc" class="com.fengling.cms.lucene.SolrContentSvcImpl"/>
+	
 	<bean id="searchWordsCache" class="com.fengling.cms.service.SearchWordsCacheImpl"/>
 	<bean id="imageSvc" class="com.fengling.cms.service.ImageSvcImpl"/>
 	<bean id="staticPageSvc" class="com.fengling.cms.staticpage.StaticPageSvcImpl">
@@ -76,6 +79,9 @@
 		</property>
 	</bean>
 	<bean id="cmsStatistSvc" class="com.fengling.cms.statistic.CmsStatisticSvcImpl"/>
+	
+	<bean id="solrServer" class="com.fengling.search.solrmodule.query.EPSSolrServerForFengLing">
+	</bean>
 	
 	<!--LISTENER-->
 	<bean id="contentLuceneListener" class="com.fengling.cms.lucene.ContentLuceneListener"/>
@@ -200,6 +206,7 @@
 	<bean id="cmsReceiverMessageDao" class="com.fengling.cms.dao.assist.impl.CmsReceiverMessageDaoImpl"/>
 	
 	<bean id="luceneContentDao" class="com.fengling.cms.lucene.LuceneContentDaoImpl"/>
+	<bean id="solrContentDao" class="com.fengling.cms.lucene.SolrContentDaoImpl"/>
 	
 	<bean id="staticPageDao" class="com.fengling.cms.staticpage.StaticPageDaoImpl"/>
 	<bean id="cmsStatisticDao" class="com.fengling.cms.statistic.CmsStatisticDaoImpl"/>

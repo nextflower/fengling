@@ -1,41 +1,37 @@
 package com.fengling.cms.lucene;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fengling.cms.entity.main.Channel;
 import com.fengling.cms.entity.main.Content;
-import com.fengling.core.entity.CmsSite;
 import com.fengling.search.solrmodule.query.EPSSolrServerForFengLing;
 import com.fengling.search.solrmodule.write.EpsSolrDocument;
 
 @Component
 public class SolrContentSvcImpl implements SolrContentSvc {
 	
-	private EPSSolrServerForFengLing server = new EPSSolrServerForFengLing();
+	@Autowired
+	private EPSSolrServerForFengLing solrServer;
 
 	public void createIndex(Content c) {
-		EpsSolrDocument doc = createDocument(c);
-		server.addDocument(doc, false);
+		EpsSolrDocument doc = SolrContent.createDocument(c);
+		solrServer.addDocument(doc, false);
 	}
 
 	public void deleteIndex(Content c) {
-		server.deleteById(String.valueOf(c.getId()));
+		solrServer.deleteById(String.valueOf(c.getId()));
 	}
 
 	public void updateIndex(Content c) {
 		deleteIndex(c);
-		createDocument(c);
+		createIndex(c);
 	}
-	
-	private EpsSolrDocument createDocument(Content content) {
-		Channel channel = content.getChannel();
-		CmsSite site = content.getSite();
-		EpsSolrDocument doc = new EpsSolrDocument();
-		doc.addField(ID, content.getId());
-		return doc;
-	}
-	
 
-	public static final String ID = "ID";//主键
+	public void createIndex(Integer siteId, Integer channelId) {
+		solrContentDao.index(solrServer, siteId, channelId);
+	}
+	
+	@Autowired
+	private SolrContentDao solrContentDao;
 
 }

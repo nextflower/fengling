@@ -15,10 +15,12 @@ import com.fengling.cms.entity.main.Content;
 import com.fengling.cms.entity.main.ContentCheck;
 import com.fengling.common.hibernate3.Finder;
 import com.fengling.common.hibernate3.HibernateBaseDao;
+import com.fengling.search.solrmodule.query.EPSSolrServer;
+import com.fengling.search.solrmodule.query.EPSSolrServerForCommon;
 
 @Repository
-public class LuceneContentDaoImpl extends HibernateBaseDao<Content, Integer>
-		implements LuceneContentDao {
+public class SolrContentDaoImpl extends HibernateBaseDao<Content, Integer>
+		implements SolrContentDao {
 	public Integer index(IndexWriter writer, Integer siteId, Integer channelId,
 			Date startDate, Date endDate, Integer startId, Integer max)
 			throws CorruptIndexException, IOException {
@@ -77,5 +79,39 @@ public class LuceneContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	@Override
 	protected Class<Content> getEntityClass() {
 		return Content.class;
+	}
+
+	public Integer index(EPSSolrServerForCommon server, Integer siteId, Integer channelId) {
+		Finder f = Finder.create("select bean from Content bean");
+		if (channelId != null) {
+			f.append(" join bean.channel channel, Channel parent");
+			f.append(" where channel.lft between parent.lft and parent.rgt");
+			f.append(" and channel.site.id=parent.site.id");
+			f.append(" and parent.id=:parentId");
+			f.setParam("parentId", channelId);
+		} else if (siteId != null) {
+			f.append(" where bean.site.id=:siteId");
+			f.setParam("siteId", siteId);
+		}
+		
+		f.append(" and bean.status=" + ContentCheck.CHECKED);
+		f.append(" order by bean.id asc");
+		
+		Session session = getSession();
+		ScrollableResults contents = f.createQuery(getSession()).setCacheMode(
+				CacheMode.IGNORE).scroll(ScrollMode.FORWARD_ONLY);
+		int count = 0;
+		Content content = null;
+		while (contents.next()) {
+			content = (Content) contents.get(0);
+			
+			server.addDocument(SolrContent.createDocument(content), false);
+			
+			if (++count % 20 == 0) {
+				session.clear();
+			}
+		}
+		
+		return count;
 	}
 }

@@ -23,6 +23,13 @@ public interface SolrContentSvc {
 	 * @param c
 	 */
 	public void updateIndex(Content c);
+
+	/**
+	 * 重建索引逻辑
+	 * @param siteId
+	 * @param channelId
+	 */
+	public void createIndex(Integer siteId, Integer channelId);
 	
 
 }
