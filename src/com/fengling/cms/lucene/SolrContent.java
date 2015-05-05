@@ -38,16 +38,17 @@ public class SolrContent {
 		doc.addField(PARAM_CONTENT, c.getTxt());
 		
 		Date releaseDate = c.getReleaseDate();
-		doc.addField(PARAM_RELEASE_DATE, c.getReleaseDate());
-		doc.addField(PARAM_RELEASE_YEAR, getDateYear(releaseDate));
-		doc.addField(PARAM_RELEASE_MONTH, getDateMonth(releaseDate));
-		
+		if(releaseDate != null) {
+			doc.addField(PARAM_RELEASE_DATE, releaseDate);
+			doc.addField(PARAM_RELEASE_YEAR, getDateYear(releaseDate));
+			doc.addField(PARAM_RELEASE_MONTH, getDateMonth(releaseDate));
+		}
 		
 		return doc;
 	}
 	
 	public static String getDateMonth(Date d) {
-		DateFormat format = new SimpleDateFormat("yyyyMM");
+		DateFormat format = new SimpleDateFormat("yyyy年MM月");
 		return format.format(d);
 	}
 	

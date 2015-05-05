@@ -1,5 +1,6 @@
 package com.fengling.common.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -270,4 +271,10 @@ public class DateUtils {
 		}
 		return date;
 	}
+	
+	public static String getDateString(Date d, String pattern) {
+		DateFormat format = new SimpleDateFormat(pattern);
+		return format.format(d);
+	}
+	
 }

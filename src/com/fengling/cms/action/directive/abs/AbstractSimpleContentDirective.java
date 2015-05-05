@@ -50,6 +50,10 @@ public abstract class AbstractSimpleContentDirective implements
 	 */
 	public static final String PARAM_IMAGE = "image";
 	/**
+	 * 输入参数，发布月份。
+	 */
+	public static final String PARAM_RELEASE_MONTH = "releaseMonth";
+	/**
 	 * 输入参数，排序方式。
 	 * <ul>
 	 * <li>0：ID降序
@@ -137,6 +141,11 @@ public abstract class AbstractSimpleContentDirective implements
 			throws TemplateException {
 		return DirectiveUtils.getString(PARAM_TITLE, params);
 	}
+	
+	protected String getReleaseMonth(Map<String, TemplateModel> params)
+			throws TemplateException {
+		return DirectiveUtils.getString(PARAM_RELEASE_MONTH, params);
+	}
 
 	protected int getOrderBy(Map<String, TemplateModel> params)
 			throws TemplateException {
@@ -157,16 +166,17 @@ public abstract class AbstractSimpleContentDirective implements
 		Integer[] siteIds = getSiteIds(params);
 		Integer[] channelIds = getChannelIds(params);
 		Integer rootChannelId = getRootChannelId(params);
+		String releaseMonth = getReleaseMonth(params);
 		String title = getTitle(params);
 		int count = FrontUtils.getCount(params);
 
 		// 主要条件为空，则执行此处代码。
 		if (isPage()) {
 			int pageNo = FrontUtils.getPageNo(env);
-			return contentMng.getPage(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, orderBy, pageNo, count);
+			return contentMng.getPage(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, releaseMonth, orderBy, pageNo, count);
 		} else {
 			int first = FrontUtils.getFirst(params);
-			return contentMng.getList(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, orderBy, first, count);
+			return contentMng.getList(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, releaseMonth, orderBy, first, count);
 		}
 	}
 

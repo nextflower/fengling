@@ -163,13 +163,17 @@ public interface ContentMng {
 
 	public List<Content> getList(Integer[] siteIds, Integer[] channelIds,
 			Integer rootChannelId, Integer[] typeIds, String title,
-			Boolean recommend, Boolean titleImg, int orderBy, Integer first, Integer count);
+			Boolean recommend, Boolean titleImg,  String releaseMonth, int orderBy, Integer first, Integer count);
 
 
 	public Pagination getPage(Integer[] siteIds, Integer[] channelIds,
 			Integer rootChannelId, Integer[] typeIds, String title,
-			Boolean recommend, Boolean titleImg, int orderBy, int pageNo,
+			Boolean recommend, Boolean titleImg, String releaseMonth, int orderBy, int pageNo,
 			int pageSize);
+
+
+	public Map<String, Integer> getGroupResult(Integer siteId, Integer channelId,
+			String groupby);
 	
 	
 }

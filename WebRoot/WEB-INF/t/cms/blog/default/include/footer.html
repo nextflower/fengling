@@ -1,9 +1,13 @@
 <footer>
   <p>欢迎访问 <a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备15002628号-3</a> <a href="/">网站统计</a></p>
 </footer>
-
+<!--right side ads-->
+<div class="col-md-2 text-center">
+	<a class="backtop"><h6>返回顶部</h6></a>
+</div>
+<link rel="stylesheet" href="${base}/res/common/css/duoshuo-ext.css">
 <script src="${base}/res/common/js/user_brower.js"></script>
-
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
 <!--多说js加载开始，一个页面只需要加载一次 -->
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"fenglingdukou"};
@@ -14,6 +18,24 @@ var duoshuoQuery = {short_name:"fenglingdukou"};
     ds.charset = 'UTF-8';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
 })();
+
+
+$(window).scroll(function () {
+    if($(window).scrollTop()>=100) {
+        $(".backtop").fadeIn();
+    }else {
+    	$(".backtop").fadeOut();
+    }
+});
+
+//返回顶部
+$(".backtop").click(function(event){
+    $('html,body').animate({
+        scrollTop: 0
+    }, 500);
+    return false;
+});
+		
 </script>
 <!--多说js加载结束，一个页面只需要加载一次 -->
 

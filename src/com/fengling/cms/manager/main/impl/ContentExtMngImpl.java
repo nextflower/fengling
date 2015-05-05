@@ -26,6 +26,7 @@ public class ContentExtMngImpl implements ContentExtMng {
 	}
 
 	public ContentExt update(ContentExt bean) {
+		bean.init();
 		Updater<ContentExt> updater = new Updater<ContentExt>(bean);
 		bean = dao.updateByUpdater(updater);
 		bean.blankToNull();

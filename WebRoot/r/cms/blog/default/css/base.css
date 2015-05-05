@@ -23,6 +23,21 @@ nav a:hover { text-decoration: none }
 article { width: 1000px; margin: 20px auto; overflow: hidden }
 aside { width: 250px; }
 footer { text-align: center; line-height: 40px; border-top: #E8E8E8 1px solid ; width:1000px; margin:auto}
+a.backtop {
+    background: url("../images/top.gif") no-repeat rgba(0, 0, 0, 0);
+    bottom: 50px;
+    cursor: pointer;
+    display: none;
+    height: 13px;
+    position: fixed;
+    right: 50px;
+    text-indent: -9999px;
+    width: 41px;
+    z-index: 100;
+}
+.website { margin: 10px 0; background: #F3F3F3; border-radius: 50%; text-align: center; }
+.website li { line-height: 26px; text-shadow: #fff 1px 1px 1px; height: 26px; }
+.weixin { background: url(../images/weixin.jpg) no-repeat; width: 100%; display: inline-block; height: 274px; overflow: hidden; margin: 10px 0; clear: both }
 
 
 

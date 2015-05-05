@@ -13,6 +13,8 @@ import java.io.Serializable;
  */
 
 public abstract class BaseContentExt  implements Serializable {
+	
+	public static String AUTHOR_DEFAULT = "于辰";
 
 	public static String REF = "ContentExt";
 	public static String PROP_SHORT_TITLE = "shortTitle";
@@ -94,6 +96,8 @@ public abstract class BaseContentExt  implements Serializable {
 	private java.lang.String link;
 	private java.lang.String tplContent;
 	private java.lang.Boolean needRegenerate;
+	private java.lang.String releaseMonth;//2014年03月
+	private java.lang.Integer releaseYear;//2014
 
 	// one to one
 	private com.fengling.cms.entity.main.Content content;
@@ -435,6 +439,22 @@ public abstract class BaseContentExt  implements Serializable {
 
 	public String toString () {
 		return super.toString();
+	}
+
+	public void setReleaseMonth(java.lang.String releaseMonth) {
+		this.releaseMonth = releaseMonth;
+	}
+
+	public java.lang.String getReleaseMonth() {
+		return releaseMonth;
+	}
+
+	public void setReleaseYear(java.lang.Integer releaseYear) {
+		this.releaseYear = releaseYear;
+	}
+
+	public java.lang.Integer getReleaseYear() {
+		return releaseYear;
 	}
 
 

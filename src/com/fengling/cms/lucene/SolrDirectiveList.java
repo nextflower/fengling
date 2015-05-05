@@ -8,6 +8,7 @@ import static com.fengling.core.web.util.FrontUtils.PARAM_STYLE_LIST;
 import static freemarker.template.ObjectWrapper.DEFAULT_WRAPPER;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fengling.cms.Constants;
 import com.fengling.cms.entity.main.Content;
+import com.fengling.cms.manager.main.ContentMng;
 import com.fengling.common.web.freemarker.DirectiveUtils;
 import com.fengling.common.web.freemarker.ParamsRequiredException;
 import com.fengling.common.web.freemarker.DirectiveUtils.InvokeType;
 import com.fengling.common.web.springmvc.RealPathResolver;
 import com.fengling.core.entity.CmsSite;
 import com.fengling.core.web.util.FrontUtils;
+import com.fengling.search.solrmodule.condition.SolrSearchCondition;
+import com.fengling.search.solrmodule.page.SolrResult;
+import com.fengling.search.solrmodule.query.EPSSolrServerForFengLing;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -32,6 +37,12 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 
 public class SolrDirectiveList extends SolrDirectiveAbstract {
+	
+	@Autowired
+	private EPSSolrServerForFengLing solrServer;
+	@Autowired
+	private ContentMng contentMng;
+	
 	/**
 	 * 模板名称
 	 */
@@ -41,9 +52,16 @@ public class SolrDirectiveList extends SolrDirectiveAbstract {
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
 		CmsSite site = FrontUtils.getSite(env);
-		int first = FrontUtils.getFirst(params);
+		int pageNo = FrontUtils.getPageNo(env);
 		int count = FrontUtils.getCount(params);
-		List<Content> list = null;
+		
+		SolrSearchCondition condition = getCondition(params, site.getId());
+		condition.setPageNo(pageNo - 1);
+		condition.setPageSize(count);
+		
+		SolrResult result = solrServer.query(condition);
+		
+		List<Content> list = convert(result, count);
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
 				params);
@@ -72,8 +90,24 @@ public class SolrDirectiveList extends SolrDirectiveAbstract {
 		DirectiveUtils.removeParamsFromVariable(env, paramWrap, origMap);
 	}
 
-	@Autowired
-	private LuceneContentSvc luceneContentSvc;
-	@Autowired
-	private RealPathResolver realPathResolver;
+	private List<Content> convert(SolrResult sr, int count) {
+		List<Content> resultList = new ArrayList<Content>();
+		Map<String, Object> resultMap = sr.getResultMap();
+		List<Map<String, Object>> list =  (List<Map<String, Object>>) resultMap.get(SolrResult.RESULT_LIST);
+		
+		Integer[] ids = new Integer[count];
+		
+		for(int i=0; i<list.size(); i++) {
+			Map<String, Object> map = list.get(i);
+			String id = (String) map.get("ID");
+			ids[i] = Integer.parseInt(id);
+		}
+		
+		if(ids.length > 0) {
+			resultList = contentMng.getListByIdsForTag(ids, 4);
+		}
+		
+		return resultList;
+	}
+	
 }

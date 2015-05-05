@@ -28,7 +28,7 @@
 	    	[#if a.smallImg??]
 			<a href="${a.url!}"><img src="${a.smallImg!}"></a>
 			[#else]
-			<img src="/${res}/images/dk2.jpg">
+			<a href="${a.url!}"><img src="/${res}/images/dk2.jpg"></a>
 			[/#if]
 		</figure>
 	    <ul class="nlist">
@@ -96,6 +96,7 @@
       <h3><p>最近访客</p></h3>
       <ul class="ds-recent-visitors" data-avatar-size="30"></ul>
     </div>
+	[#include "../include/friendlink.html"/]
 </aside>
 </article>
 

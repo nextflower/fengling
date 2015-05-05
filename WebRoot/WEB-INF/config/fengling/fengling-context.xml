@@ -13,6 +13,7 @@
 	<bean id="cms_channel_page" class="com.fengling.cms.action.directive.ChannelPageDirective"/>
 	<bean id="cms_channel" class="com.fengling.cms.action.directive.ChannelDirective"/>
 	<bean id="cms_content" class="com.fengling.cms.action.directive.ContentDirective"/>
+	<bean id="cms_content_group" class="com.fengling.cms.action.directive.ContentGroupByDirective"/>
 	<bean id="cms_content_list" class="com.fengling.cms.action.directive.ContentListDirective"/>
 	<bean id="cms_content_page" class="com.fengling.cms.action.directive.ContentPageDirective"/>
 	<bean id="cms_simple_content_list" class="com.fengling.cms.action.directive.SimpleContentListDirective"/>
@@ -33,6 +34,7 @@
 	<bean id="cms_solr_list" class="com.fengling.cms.lucene.SolrDirectiveList"/>
 	<bean id="cms_lucene_page" class="com.fengling.cms.lucene.LuceneDirectivePage"/>
 	<bean id="cms_solr_page" class="com.fengling.cms.lucene.SolrDirectivePage"/>
+	<bean id="cms_solr_group" class="com.fengling.cms.lucene.SolrGroupDirective"/>
 	<bean id="cms_advertising" class="com.fengling.cms.action.directive.CmsAdvertisingDirective"/>
 	<bean id="cms_vote_list" class="com.fengling.cms.action.directive.CmsVoteListDirective"/>
 	<bean id="cms_model" class="com.fengling.cms.action.directive.CmsModelDirective"/>
@@ -106,8 +108,8 @@
 			<list>
 				<!--
 				<ref bean="contentLuceneListener"/>
-				-->
 				<ref bean="contentSolrListener"/>
+				-->
 				<ref bean="contentStaticPageListener"/>
 			</list>
 		</property>

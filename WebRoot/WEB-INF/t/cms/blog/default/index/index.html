@@ -9,10 +9,10 @@
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <link href="/${res}/css/base.css" rel="stylesheet">
 <link href="/${res}/css/index.css" rel="stylesheet">
+<link href="/${res}/css/learn.css" rel="stylesheet">
 
 <link rel="shortcut icon"  type="image/x-icon" href="/${res}/images/fengling.ico" /> 
 
-<script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -77,6 +77,7 @@ a{ color:#333333; text-decoration:none;}
     text-align: center;
     width: 26px;
 }
+
 </style> 
 
 <script type="text/javascript"> 
@@ -101,24 +102,19 @@ $(document).ready(function() {
       <p>从此岸到彼岸，去见另一个自己。</p>
       <p>彼岸有种花，名字叫曼珠沙华。</p>
     </ul>
-	<!--
-    <div class="avatar"><a href="#"><span>风陵渡口</span></a> </div>
-	-->
+	<!---->
+    <div class="avatar"><a href="${base}"><span>风陵渡口</span></a> </div>
+	
   </section>
 </div>
 <!--
 <div class="template">
   <div class="box">
     <h3>
-      <p><span>专题列表[<span><a href="${base}/topic.jspx">查看全部</a></span>]</span> </p>
+      <p><span>专题列表[<span><a href="/">查看全部</a></span>]</span> </p>
 	  
     </h3>
     <ul>
-    	[@cms_topic_list count='7' descLen='35' append='...']
-			[#list tag_list as t]
-      			<li><a href="${base}/topic/${t.id}.jspx"  target="_blank"><img src="${t.titleImg!site.defImg}"></a><span>${t.name}</span></li>
-			[/#list]
-		[/@cms_topic_list]
       <li><a href="/"  target="_blank"><img src="../../r/blog/images/01.jpg"></a><span>仿新浪博客风格·梅——古典个人博客模板</span></li>
       <li><a href="/"  target="_blank"><img src="../../r/blog/images/01.jpg"></a><span>仿新浪博客风格·梅——古典个人博客模板</span></li>
       <li><a href="/"  target="_blank"><img src="../../r/blog/images/01.jpg"></a><span>仿新浪博客风格·梅——古典个人博客模板</span></li>
@@ -190,44 +186,53 @@ $(document).ready(function() {
 		</div> 
 	</div> 
     <div class="news">
-    <h3 class="ph">
-      <p>月<span>排行</span></p>
-    </h3>
-    <ul class="paih">
-    	[@cms_content_list count='5' orderBy='8' titLen='18']
-        [#list tag_list as a]
-		<li>
-			<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
-		</li>
-        [/#list]
-        [/@cms_content_list]
-    </ul>
-	<h3>
-      <p>总<span>排行</span></p>
-    </h3>
-    <ul class="rank">
-    	[@cms_content_list count='5' orderBy='9' titLen='18']
-        [#list tag_list as a]
-		<li>
-			<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
-		</li>
-        [/#list]
-        [/@cms_content_list]
-    </ul>
-	<h3>
-      <p>热评<span>排行</span></p>
-    </h3>
-	<ul  class="ds-top-threads rank" data-range="weekly" data-num-items="5"></ul>
-    <h3 class="links">
-      <p>友情<span>链接</span></p>
-    </h3>
-    <ul class="website">
-	  [@cms_friendlink_list ctgId='1']
-        [#list tag_list as link]
-			<li><a href="${link.domain}"  target="_blank" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')">${link.name}</a></li>
-        [/#list]
-        [/@cms_friendlink_list]
-    </ul> 
+    	<!--月排行-->
+	    <h3 class="ph">
+	      <p>月<span>排行</span></p>
+	    </h3>
+	    <ul class="paih">
+	    	[@cms_content_list count='5' orderBy='8' titLen='18']
+	        [#list tag_list as a]
+			<li>
+				<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+			</li>
+	        [/#list]
+	        [/@cms_content_list]
+	    </ul>
+		
+		<!--总排行-->
+		<h3>
+	      <p>总<span>排行</span></p>
+	    </h3>
+	    <ul class="rank">
+	    	[@cms_content_list count='5' orderBy='9' titLen='18']
+	        [#list tag_list as a]
+			<li>
+				<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+			</li>
+	        [/#list]
+	        [/@cms_content_list]
+	    </ul>
+		
+		<!--热评排行-->
+		<h3>
+	      <p>热评<span>排行</span></p>
+	    </h3>
+		<ul  class="ds-top-threads rank" data-range="weekly" data-num-items="5"></ul>
+		
+		<!--文章归档-->
+		<div class="rnav">
+	      <h2>文章归档</h2>
+	      <ul>
+	      	[@cms_content_group groupby='releaseMonth']
+				[#list tag_list?keys as key]
+					<li><a href="${base}/guidang/${key}_1.jhtml" target="_self">${key}(<font color="blue">${tag_list[key]}</font>)</a></li>
+                [/#list]
+	      	[/@cms_content_group]
+	     </ul>      
+	    </div>
+		
+		[#include "../include/friendlink.html"/]
     </div>  
 	
 	<!--

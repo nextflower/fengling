@@ -849,14 +849,19 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 
 	public List<Content> getList(Integer[] siteIds, Integer[] channelIds,
 			Integer rootChannelId, Integer[] typeIds, String title,
-			Boolean recommend, Boolean titleImg, int orderBy, Integer first, Integer count) {
-		return dao.getList(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, orderBy, first, count);
+			Boolean recommend, Boolean titleImg, String  releaseMonth, int orderBy, Integer first, Integer count) {
+		return dao.getList(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, releaseMonth, orderBy, first, count);
 	}
 
 	public Pagination getPage(Integer[] siteIds, Integer[] channelIds,
 			Integer rootChannelId, Integer[] typeIds, String title,
-			Boolean recommend, Boolean titleImg, int orderBy, int pageNo,
+			Boolean recommend, Boolean titleImg, String releaseMonth, int orderBy, int pageNo,
 			int pageSize) {
-		return dao.getPage(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, orderBy, pageNo, pageSize);
+		return dao.getPage(siteIds, channelIds, rootChannelId, typeIds, title, recommend, titleImg, releaseMonth, orderBy, pageNo, pageSize);
+	}
+
+	public Map<String, Integer> getGroupResult(Integer siteId, Integer channelId,
+			String groupby) {
+		return dao.getGroupResult(siteId, channelId, groupby);
 	}
 }

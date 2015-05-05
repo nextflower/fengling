@@ -9,8 +9,10 @@ import static com.fengling.core.web.util.FrontUtils.PARAM_STYLE_LIST;
 import static freemarker.template.ObjectWrapper.DEFAULT_WRAPPER;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +20,8 @@ import org.apache.lucene.queryParser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fengling.cms.Constants;
+import com.fengling.cms.entity.main.Content;
+import com.fengling.cms.manager.main.ContentMng;
 import com.fengling.common.page.Pagination;
 import com.fengling.common.web.freemarker.DirectiveUtils;
 import com.fengling.common.web.freemarker.ParamsRequiredException;
@@ -25,6 +29,8 @@ import com.fengling.common.web.freemarker.DirectiveUtils.InvokeType;
 import com.fengling.common.web.springmvc.RealPathResolver;
 import com.fengling.core.entity.CmsSite;
 import com.fengling.core.web.util.FrontUtils;
+import com.fengling.search.solrmodule.condition.SolrSearchCondition;
+import com.fengling.search.solrmodule.page.SolrResult;
 import com.fengling.search.solrmodule.query.EPSSolrServerForFengLing;
 
 import freemarker.core.Environment;
@@ -36,6 +42,8 @@ public class SolrDirectivePage extends SolrDirectiveAbstract {
 	
 	@Autowired
 	private EPSSolrServerForFengLing solrServer;
+	@Autowired
+	private ContentMng contentMng;
 	
 	/**
 	 * 模板名称
@@ -45,12 +53,18 @@ public class SolrDirectivePage extends SolrDirectiveAbstract {
 	@SuppressWarnings("unchecked")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
+		
 		CmsSite site = FrontUtils.getSite(env);
 		int pageNo = FrontUtils.getPageNo(env);
 		int count = FrontUtils.getCount(params);
 		
+		SolrSearchCondition condition = getCondition(params, site.getId());
+		condition.setPageNo(pageNo);
+		condition.setPageSize(count);
 		
-		Pagination page = null;
+		SolrResult result = solrServer.query(condition);
+		
+		Pagination page = convert(result);
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
 				params);
@@ -82,6 +96,27 @@ public class SolrDirectivePage extends SolrDirectiveAbstract {
 			throw new RuntimeException("invoke type not handled: " + type);
 		}
 		DirectiveUtils.removeParamsFromVariable(env, paramWrap, origMap);
+	}
+
+	
+	private Pagination convert(SolrResult sr) {
+		Pagination page = new Pagination(sr.getPageNo(), sr.getPageSize(), sr.getTotalCount());
+		List<Content> resultList = new ArrayList<Content>();
+		Map<String, Object> resultMap = sr.getResultMap();
+		List<Map<String, Object>> list =  (List<Map<String, Object>>) resultMap.get(SolrResult.RESULT_LIST);
+		Integer[] ids = new Integer[sr.getPageSize()];
+		
+		for(int i=0; i<list.size(); i++) {
+			Map<String, Object> map = list.get(i);
+			String id = (String) map.get("ID");
+			ids[i] = Integer.parseInt(id);
+		}
+		
+		if(ids.length > 0) {
+			resultList = contentMng.getListByIdsForTag(ids, 4);
+		}
+		page.setList(resultList);
+		return page;
 	}
 
 }

@@ -21,9 +21,12 @@ import static com.fengling.cms.action.directive.abs.AbstractContentDirective.PAR
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableSet;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
@@ -873,7 +876,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	public List<Content> getList(Integer[] siteIds, Integer[] channelIds,
 			Integer rootChannelId, Integer[] typeIds, String title,
-			Boolean recommend, Boolean titleImg, int orderBy, Integer first, Integer count) {
+			Boolean recommend, Boolean titleImg, String releaseMonth, int orderBy, Integer first, Integer count) {
 		Finder f = Finder.create("select  bean from Content bean");
 		f.append(" join bean.contentExt as ext where 1=1");
 		if (titleImg != null) {
@@ -885,6 +888,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.setParam("recommend", recommend);
 		}
 		appendReleaseDate(f);
+		appendReleaseMonth(f, releaseMonth);
 		appendChannelIds(f, channelIds);
 		appendTypeIds(f, typeIds);
 		appendSiteIds(f, siteIds);
@@ -912,7 +916,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	public Pagination getPage(Integer[] siteIds, Integer[] channelIds,
 			Integer rootChannelId, Integer[] typeIds, String title,
-			Boolean recommend, Boolean titleImg, int orderBy, int pageNo,
+			Boolean recommend, Boolean titleImg, String releaseMonth, int orderBy, int pageNo,
 			int pageSize) {
 		Finder f = Finder.create("select  bean from Content bean");
 		f.append(" join bean.contentExt as ext where 1=1");
@@ -928,6 +932,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		appendChannelIds(f, channelIds);
 		appendTypeIds(f, typeIds);
 		appendSiteIds(f, siteIds);
+		appendReleaseMonth(f, releaseMonth);
 		f.append(" and bean.status=" + ContentCheck.CHECKED);
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
@@ -941,5 +946,59 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
+	}
+
+
+	private void appendReleaseMonth(Finder f, String releaseMonth) {
+		if(StringUtils.isNotBlank(releaseMonth)) {
+			f.append(" and ext.releaseMonth=:releaseMonth");
+			f.setParam("releaseMonth", releaseMonth);
+		}
+	}
+
+
+	@SuppressWarnings("rawtypes")
+	public Map<String, Integer> getGroupResult(Integer siteId,
+			Integer channelId, String groupby) {
+		
+		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
+		
+		if(StringUtils.isBlank(groupby)) {
+			return map;
+		}
+		
+		
+		Finder f = Finder.create("select ext." + groupby + ", count(c) from Content c");
+		f.append(" join c.contentExt as ext where 1=1");
+		
+		if(siteId != null) {
+			f.append(" and c.site.id=:siteId");
+			f.setParam("siteId", siteId);
+		}
+		
+		if(channelId != null) {
+			f.append(" and c.channel.id=:channelId");
+			f.setParam("channelId", channelId);
+		}
+		
+		f.append(" group by ext." + groupby);
+		
+		Iterator it = find(f).iterator();
+		
+		while(it.hasNext()) { 
+			Object[] row = (Object[])it.next(); 
+			String key = (String) row[0];
+			Long value = (Long) row[1];
+			map.put(key, Integer.parseInt(value + ""));
+		}
+		
+		NavigableSet<String> set = map.descendingKeySet();
+		
+		LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
+		for(String key : set) {
+			result.put(key, map.get(key));
+		}
+		
+		return result;
 	}
 }

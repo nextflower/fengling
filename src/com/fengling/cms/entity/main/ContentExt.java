@@ -1,10 +1,12 @@
 package com.fengling.cms.entity.main;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.fengling.cms.entity.main.base.BaseContentExt;
+import com.fengling.common.util.DateUtils;
 import com.fengling.core.entity.CmsSite;
 import com.fengling.core.web.util.CmsUtils;
 
@@ -34,6 +36,15 @@ public class ContentExt extends BaseContentExt {
 		if(getNeedRegenerate()==null){
 			setNeedRegenerate(true);
 		}
+		
+		if(StringUtils.isBlank(getAuthor())) {
+			setAuthor(AUTHOR_DEFAULT);
+		}
+		
+		Date date = getReleaseDate();
+		setReleaseMonth(DateUtils.getDateString(date, "yyyy年MM月"));
+		setReleaseYear(Integer.parseInt(DateUtils.getDateString(date, "yyyy")));
+		
 		blankToNull();
 	}
 

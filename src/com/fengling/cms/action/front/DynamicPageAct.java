@@ -1,5 +1,6 @@
 package com.fengling.cms.action.front;
 
+import static com.fengling.cms.Constants.TPLDIR_SPECIAL;
 import static com.fengling.common.web.Constants.INDEX;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -45,6 +47,20 @@ public class DynamicPageAct {
 	public static final String TPL_INDEX = "tpl.index";
 	public static final String GROUP_FORBIDDEN = "login.groupAccessForbidden";
 	public static final String CONTENT_STATUS_FORBIDDEN ="content.notChecked";
+	public static final String GUIDANG = "tpl.guidang";
+	
+	@RequestMapping(value = "/guidang/{releaseMonth}_{pageNo}.jhtml", method = RequestMethod.GET)
+	public String guidang(@PathVariable("releaseMonth") String releaseMonth, @PathVariable("pageNo") String pageNo, HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		
+		CmsSite site = CmsUtils.getSite(request);
+		model.put("releaseMonth", releaseMonth);
+		
+		FrontUtils.frontData(request, model, site);
+		FrontUtils.frontPageData(request, model);
+		
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_SPECIAL, GUIDANG);
+	}
 	
 
 	/**

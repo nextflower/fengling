@@ -1,0 +1,11 @@
+<!--友情链接-->
+<h3 class="links">
+  <p>友情<span>链接</span></p>
+</h3>
+<ul class="website">
+  [@cms_friendlink_list ctgId='1']
+    [#list tag_list as link]
+		<li><a href="${link.domain}"  target="_blank" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')">${link.name}</a></li>
+    [/#list]
+    [/@cms_friendlink_list]
+</ul> 
